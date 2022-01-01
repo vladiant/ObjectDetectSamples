@@ -1,0 +1,103 @@
+PARAMETERS:
+cascadeDirName: data
+vecFileName: airplanes.vec
+bgFileName: bg.txt
+numPos: 680
+numNeg: 1200
+numStages: 10
+precalcValBufSize[Mb] : 1024
+precalcIdxBufSize[Mb] : 1024
+acceptanceRatioBreakValue : -1
+stageType: BOOST
+featureType: LBP
+sampleWidth: 32
+sampleHeight: 32
+boostType: GAB
+minHitRate: 0.995
+maxFalseAlarmRate: 0.2
+weightTrimRate: 0.95
+maxDepth: 1
+maxWeakCount: 100
+Number of unique features given windowSize [32,32] : 27225
+
+===== TRAINING 0-stage =====
+<BEGIN
+POS count : consumed   680 : 680
+NEG count : acceptanceRatio    1200 : 1
+Precalculation time: 1
++----+---------+---------+
+|  N |    HR   |    FA   |
++----+---------+---------+
+|   1|        1|        1|
++----+---------+---------+
+|   2|        1|        1|
++----+---------+---------+
+|   3| 0.998529| 0.623333|
++----+---------+---------+
+|   4| 0.998529|    0.385|
++----+---------+---------+
+|   5| 0.995588|   0.3175|
++----+---------+---------+
+|   6|        1| 0.289167|
++----+---------+---------+
+|   7| 0.998529| 0.164167|
++----+---------+---------+
+END>
+Training until now has taken 0 days 0 hours 0 minutes 3 seconds.
+
+===== TRAINING 1-stage =====
+<BEGIN
+POS count : consumed   680 : 681
+NEG count : acceptanceRatio    1200 : 0.250261
+Precalculation time: 0
++----+---------+---------+
+|  N |    HR   |    FA   |
++----+---------+---------+
+|   1|        1|        1|
++----+---------+---------+
+|   2|        1|        1|
++----+---------+---------+
+|   3| 0.998529|   0.7375|
++----+---------+---------+
+|   4| 0.995588| 0.769167|
++----+---------+---------+
+|   5|        1|   0.7025|
++----+---------+---------+
+|   6| 0.995588|   0.3975|
++----+---------+---------+
+|   7| 0.995588|     0.33|
++----+---------+---------+
+|   8| 0.997059|   0.3375|
++----+---------+---------+
+|   9| 0.995588|    0.115|
++----+---------+---------+
+END>
+Training until now has taken 0 days 0 hours 0 minutes 7 seconds.
+
+===== TRAINING 2-stage =====
+<BEGIN
+POS count : consumed   680 : 688
+NEG count : acceptanceRatio    1200 : 0.0296165
+Precalculation time: 1
++----+---------+---------+
+|  N |    HR   |    FA   |
++----+---------+---------+
+|   1|        1|        1|
++----+---------+---------+
+|   2|        1|        1|
++----+---------+---------+
+|   3|        1|        1|
++----+---------+---------+
+|   4| 0.997059| 0.239167|
++----+---------+---------+
+|   5| 0.998529|        0|
++----+---------+---------+
+END>
+Training until now has taken 0 days 0 hours 0 minutes 11 seconds.
+
+===== TRAINING 3-stage =====
+<BEGIN
+POS count : consumed   680 : 690
+NEG count : acceptanceRatio    0 : 0
+Required leaf false alarm rate achieved. Branch training terminated.
+
