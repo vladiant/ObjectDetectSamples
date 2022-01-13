@@ -1,6 +1,5 @@
 # https://github.com/bikz05/bag-of-words
 
-import argparse as ap
 import cv2
 import numpy as np
 import os
@@ -50,7 +49,7 @@ print("Extracting plane segments")
 plane_segments = []
 for result in ssresults:
     x, y, w, h = result
-    timage = image[y : y + h, x : x + w]
+    timage = image[y: y + h, x: x + w]
 
     # Skip small segments
     if w < 6 or h < 6:

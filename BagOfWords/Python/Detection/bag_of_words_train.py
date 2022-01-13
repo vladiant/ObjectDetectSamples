@@ -20,12 +20,33 @@ np.random.seed(42)
 cv2.setRNGSeed(42)
 
 # Create feature extraction and keypoint detector objects
+# Agast cv2.AgastFeatureDetector_create()
+# AKAZE cv2.AKAZE_create()
+# BRISK cv2.BRISK_create()
+# FAST cv2.FastFeatureDetector_create()
+# GFTT cv2.GFTTDetector_create()
+# KAZE cv2.KAZE_create()
+# MSER cv2.MSER_create()
+# ORB: cv2.ORB_create()
+# Need to be set as default ones lead to crash
+# __blob_detector_params = cv2.SimpleBlobDetector_Params()
+# SimpleBlob cv2.SimpleBlobDetector_create(__blob_detector_params)
+# HarrisLaplace cv2.xfeatures2d.HarrisLaplaceFeatureDetector_create()
+# STAR cv.xfeatures2d.StarDetector_create()
 fea_det = cv2.BRISK_create()
+
+# BRISK cv2.BRISK_create()
+# ORB cv2.ORB_create()
+# BoostDesc cv2.xfeatures2d.BoostDesc_create()
+# BRIEF cv2.xfeatures2d.BriefDescriptorExtractor_create()
+# FREAK cv2.xfeatures2d.FREAK_create()
+# LATCH cv2.xfeatures2d.LATCH_create()
+# LUCID cv2.xfeatures2d.LUCID_create()
+# DAISY cv2.xfeatures2d.DAISY_create()
+# VGG cv2.xfeatures2d.VGG_create()
 des_ext = cv2.BRISK_create()
 
-# Initialize segmentation
 cv2.setUseOptimized(True)
-ss = cv2.ximgproc.segmentation.createSelectiveSearchSegmentation()
 
 # List where all the descriptors are stored
 des_list = []
@@ -33,18 +54,20 @@ image_classes = []
 
 # Compute features
 print("Compute features")
-for e1, i in enumerate(os.listdir(annot)):
+file_list = os.listdir(annot)
+# np.random.shuffle(file_list)
+for image_idx, image_name in enumerate(file_list):
     try:
-        if i.startswith("airplane"):
+        if image_name.startswith("airplane"):
             # Image
-            filename = i.split(".")[0] + ".jpg"
-            print(f"Image number: {e1} , name: {filename}")
+            filename = image_name.split(".")[0] + ".jpg"
+            print(f"Image number: {image_idx} , name: {filename}")
             image = cv2.imread(os.path.join(path, filename))
 
             mask = np.zeros((image.shape[1], image.shape[0]), dtype=np.uint8)
 
             # Object ROI
-            df = pd.read_csv(os.path.join(annot, i))
+            df = pd.read_csv(os.path.join(annot, image_name))
             for row in df.iterrows():
                 x1 = int(row[1][0].split(" ")[0])
                 y1 = int(row[1][0].split(" ")[1])
@@ -56,15 +79,17 @@ for e1, i in enumerate(os.listdir(annot)):
             kpts = fea_det.detect(image)
             kpts, des = des_ext.compute(image, kpts)
 
-            des_list.append(des.astype(np.float32))
-            image_classes.append(1)
+            if des is not None:
+                des_list.append(des.astype(np.float32))
+                image_classes.append(1)
 
             # Background features
             kpts = fea_det.detect(image, cv2.bitwise_not(mask))
             kpts, des = des_ext.compute(image, kpts)
 
-            des_list.append(des.astype(np.float32))
-            image_classes.append(0)
+            if des is not None:
+                des_list.append(des.astype(np.float32))
+                image_classes.append(0)
 
     except Exception as e:
         print(e)
